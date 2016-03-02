@@ -4,6 +4,7 @@ using System.Collections;
 public class EnemyController : MonoBehaviour {
 
 	public float speed = 1.5f;
+	public GameObject Explosion;
 
 	// Use this for initialization
 	void Start () {
@@ -22,5 +23,20 @@ public class EnemyController : MonoBehaviour {
 		if(transform.position.y < min.y) {
 			Destroy (gameObject);
 		}
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		// If the enemy collides with the Player ship or the Player bullet, destroy it
+		if (collider.tag == "PlayerTag" || collider.tag == "PlayerBulletTag" ) {
+			PlayAnimation ();
+			Destroy (gameObject);
+		}
+	}
+
+	void PlayAnimation() {
+		GameObject explosion = (GameObject)Instantiate (Explosion);
+
+		// Set the explosion position to the enemy position
+		explosion.transform.position = transform.position;
 	}
 }

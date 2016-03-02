@@ -23,4 +23,10 @@ public class PlayerBullet : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "EnemyTag") {
+			Destroy (gameObject);
+		}
+	}
 }

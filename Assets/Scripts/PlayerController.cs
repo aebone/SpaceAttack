@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
 	public float speed = 3.5f;
 	public GameObject PlayerBullet; // Reference to the PlayerBullet prefab
 	public GameObject GunPosition; // Reference to the empty PlayerGun object (starting bullet point)
+	public GameObject Explosion; // Reference to the explosion prefab
 
 	// Use this for initialization
 	void Start () {
@@ -58,4 +59,21 @@ public class PlayerController : MonoBehaviour {
 		// Update the players position after position variable is checked
 		transform.position = position;
 	}
+
+	// Check if the object collides with other objects
+	void OnTriggerEnter2D (Collider2D collider) {
+		// If the player collides with the Enemy ship or the Enemy bullet, destroy it
+		if (collider.tag == "EnemyTag" || collider.tag == "EnemyBulletTag") {
+			PlayAnimation ();
+			Destroy (gameObject);
+		}
+	}
+
+	void PlayAnimation(){
+		// Instantiate the explosion
+		GameObject explosion = (GameObject)Instantiate(Explosion);
+		// Set the explosion position to the player position
+		explosion.transform.position = transform.position;
+	}
+
 }

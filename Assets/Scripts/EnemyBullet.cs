@@ -29,4 +29,10 @@ public class EnemyBullet : MonoBehaviour {
 		this.direction = direction.normalized;
 		isReady = true;
 	}
+
+	void OnTriggerEnter2D (Collider2D collider) {
+		if (collider.tag == "PlayerTag") {
+			Destroy (gameObject);
+		}
+	}
 }
