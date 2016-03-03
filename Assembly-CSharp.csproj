@@ -50,6 +50,10 @@
      <Compile Include="Assets\Scripts\EnemyController.cs" />
      <Compile Include="Assets\Scripts\EnemyGun.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+     <Compile Include="Assets\Scripts\FriendController.cs" />
+     <Compile Include="Assets\Scripts\FriendSpawner.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GameScore.cs" />
      <Compile Include="Assets\Scripts\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
  <Reference Include="UnityEngine.Networking">

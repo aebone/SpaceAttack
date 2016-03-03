@@ -19,6 +19,14 @@ public class EnemyBullet : MonoBehaviour {
 
 			// Update the new position (shoot)
 			transform.position = position;
+
+			// Find the bottom of the screen
+			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2(0,0));
+
+			// If the bullet went outside the screen on top, then destroy the bullet
+			if (transform.position.y < min.y) {
+				Destroy (gameObject);
+			}
 		}
 	}
 

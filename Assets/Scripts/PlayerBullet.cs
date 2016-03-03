@@ -25,7 +25,7 @@ public class PlayerBullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D collider) {
-		if (collider.tag == "EnemyTag") {
+		if (collider.tag == "EnemyTag" || collider.tag == "FriendTag") {
 			Destroy (gameObject);
 		}
 	}

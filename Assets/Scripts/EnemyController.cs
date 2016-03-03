@@ -6,9 +6,11 @@ public class EnemyController : MonoBehaviour {
 	public float speed = 1.5f;
 	public GameObject Explosion;
 
+	GameObject ScoreTextUI;
+
 	// Use this for initialization
 	void Start () {
-	
+		ScoreTextUI = GameObject.FindGameObjectWithTag ("ScoreTextTag");
 	}
 	
 	// Update is called once per frame
@@ -28,12 +30,15 @@ public class EnemyController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		// If the enemy collides with the Player ship or the Player bullet, destroy it
 		if (collider.tag == "PlayerTag" || collider.tag == "PlayerBulletTag" ) {
-			PlayAnimation ();
+			PlayExplosionAnimation ();
+			// Add 10 points to the score using the setScore method on the GameScore class
+			ScoreTextUI.GetComponent<GameScore>().Score += 10;
+
 			Destroy (gameObject);
 		}
 	}
 
-	void PlayAnimation() {
+	void PlayExplosionAnimation() {
 		GameObject explosion = (GameObject)Instantiate (Explosion);
 
 		// Set the explosion position to the enemy position

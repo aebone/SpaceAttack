@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 
 	public float speed = 3.5f;
+	public GameObject GameManager; // Refrence to the GameManager
 	public GameObject PlayerBullet; // Reference to the PlayerBullet prefab
 	public GameObject GunPosition; // Reference to the empty PlayerGun object (starting bullet point)
 	public GameObject Explosion; // Reference to the explosion prefab
+	public Text LivesTextUI; // Lives text
+	int maxLives = 3; // Number of lives when start
+	int lives; // To count lives
 
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -63,17 +64,39 @@ public class PlayerController : MonoBehaviour {
 	// Check if the object collides with other objects
 	void OnTriggerEnter2D (Collider2D collider) {
 		// If the player collides with the Enemy ship or the Enemy bullet, destroy it
-		if (collider.tag == "EnemyTag" || collider.tag == "EnemyBulletTag") {
-			PlayAnimation ();
-			Destroy (gameObject);
+		if (collider.tag == "EnemyTag" || collider.tag == "EnemyBulletTag" || collider.tag == "FriendTag") {
+			PlayExplosionAnimation ();
+			lives--;
+			LivesTextUI.text = lives.ToString ();
+			// If player is dead
+			if (lives == 0) {
+				// Change GameState to GameOver
+				GameManager.GetComponent<GameManager>().SetGameState(global::GameManager.GameManagerState.GameOver);
+				// Disable the player
+				gameObject.SetActive(false);
+			}
 		}
 	}
 
-	void PlayAnimation(){
+	void PlayExplosionAnimation(){
 		// Instantiate the explosion
 		GameObject explosion = (GameObject)Instantiate(Explosion);
 		// Set the explosion position to the player position
 		explosion.transform.position = transform.position;
 	}
+
+	/*
+	 * PUBLIC functions
+	 * */
+
+	// GameManager will call here when the PlayButton is clicked
+	public void Init () {
+		lives = maxLives;
+		LivesTextUI.text = lives.ToString ();
+		// Reset the player position to initial position
+		transform.position = new Vector2(0,0);
+		gameObject.SetActive (true);
+	}
+
 
 }
