@@ -17,8 +17,11 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		// Fire bullets when the spacebar is pressed
-		if (Input.GetKeyDown("space")){
+		// Fire bullets when the z is pressed
+		if (Input.GetKeyDown("z")){
+			// Play shoot sound
+			gameObject.GetComponent<AudioSource>().Play();
+
 			// Instantiate the bullet
 			GameObject bullet = (GameObject)Instantiate(PlayerBullet);
 			bullet.transform.position = GunPosition.transform.position; // Set the bullet initial position

@@ -5,11 +5,16 @@ public class GameManager : MonoBehaviour {
 
 	// Referring objects to be managed *All objects on hierarchy
 	public GameObject PlayButton;
+	public GameObject HighScoreButton;
+	public GameObject InstructionsButton;
 	public GameObject Player;
 	public GameObject EnemySpawner;
 	public GameObject GameOver;
 	public GameObject ScoreTextUI;
 	public GameObject FriendSpawner;
+	public GameObject TimeCounterGO;
+	public GameObject Logo;
+	public GameObject InputName;
 
 	// Allow to create GameManagerState object to manage the game state using switch case
 	public enum GameManagerState
@@ -35,6 +40,14 @@ public class GameManager : MonoBehaviour {
 			GameOver.SetActive(false);
 			// Set the PlayButton visible
 			PlayButton.SetActive(true);
+			// Show logo
+			Logo.SetActive(true);
+			// Show Instructions Button
+			InstructionsButton.SetActive(true);
+			// Show HighScores Button
+			HighScoreButton.SetActive(true);
+			// Hide InputName
+			InputName.SetActive(false);
 			break;
 		case GameManagerState.Playing:
 			// Set initial score to 0 - needed in case player dies and plays again
@@ -47,16 +60,26 @@ public class GameManager : MonoBehaviour {
 			EnemySpawner.GetComponent<EnemySpawner>().ScheduleEnemySpawner();
 			// Start Friend spawner
 			FriendSpawner.GetComponent<FriendSpawner>().ScheduleFriendSpawner();
+			// Start the time counter
+			TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
+			// Hide the logo
+			Logo.SetActive(false);
+			// Hide Instructions Button
+			InstructionsButton.SetActive(false);
+			// Hide HighScores Button
+			HighScoreButton.SetActive(false);
 			break;
 		case GameManagerState.GameOver:
+			// Stop the time couter
+			TimeCounterGO.GetComponent<TimeCounter>().StopTimeCounter();
 			// Stop the enemy spawner when the player dies
 			EnemySpawner.GetComponent<EnemySpawner>().UnscheduleEnemySpawner();
 			// Stop the friend spawner when the player dies
 			FriendSpawner.GetComponent<FriendSpawner>().UnscheduleFriendSpawner();
 			// Diplay game over image
 			GameOver.SetActive(true);
-			// Change the manager state to opening state after 6 seconds
-			Invoke("ChangeToOpeningState", 6f);
+			// Check score to keep or not
+			ScoreTextUI.GetComponent<GameScore>().OnGameOver(); 
 			break;
 		}
 	}
@@ -81,4 +104,6 @@ public class GameManager : MonoBehaviour {
 	public void ChangeToOpeningState () {
 		SetGameState (GameManagerState.Opening);
 	}
+
+
 }

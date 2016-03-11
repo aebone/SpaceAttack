@@ -4,7 +4,7 @@ using System.Collections;
 public class FriendSpawner : MonoBehaviour {
 
 	public GameObject Friend; // Reference to the Friend prefab
-	float maxSpawnRateInSeconds = 12f;
+	float maxSpawnRateInSeconds = 18f;
 		
 
 	void SpawnFriend() {
@@ -56,13 +56,13 @@ public class FriendSpawner : MonoBehaviour {
 	// When Play Button is clicked
 	public void ScheduleFriendSpawner() {
 		// Reset the maxSpawnRateInSeconds
-		maxSpawnRateInSeconds = 12f;
+		maxSpawnRateInSeconds = 18f;
 
-		// Invoke the first friend in 5 seconds
-		Invoke("SpawnFriend", 6f);
+		// Invoke the first friend in 9 seconds
+		Invoke("SpawnFriend", 9f);
 
-		// Increase spawn rate every 30 seconds to turn it more difficult
-		InvokeRepeating("IncreaseSpawnRate", 0f, 60f);
+		// Increase spawn rate every 30 seconds
+		InvokeRepeating("IncreaseSpawnRate", 0f, 30f);
 	}
 
 	// Function to stop friend spawner

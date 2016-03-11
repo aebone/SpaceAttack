@@ -28,6 +28,8 @@ public class FriendController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collider) {
 		if (collider.tag == "PlayerTag" || collider.tag == "PlayerBulletTag" ) {	
 			PlayExplosionAnimation ();
+			if (collider.tag == "PlayerBulletTag")
+				PlayMessage ();
 			// Reduce 5 points to the score using the setScore method on the GameScore class
 			ScoreTextUI.GetComponent<GameScore>().Score -= 5;
 			Destroy (gameObject);
@@ -36,11 +38,13 @@ public class FriendController : MonoBehaviour {
 
 	void PlayExplosionAnimation () {
 		GameObject explosion = (GameObject)Instantiate (Explosion);
-		GameObject message = (GameObject)Instantiate (FriendMessage);
 
 		// Set the explosion on the gameObject position;
 		explosion.transform.position = transform.position;
-		// Set the message on the gameObject position;
+	}
+
+	void PlayMessage () {
+		GameObject message = (GameObject)Instantiate (FriendMessage);
 		message.transform.position = transform.position;
 	}
 }

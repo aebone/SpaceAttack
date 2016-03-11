@@ -20,11 +20,12 @@ public class EnemyBullet : MonoBehaviour {
 			// Update the new position (shoot)
 			transform.position = position;
 
-			// Find the bottom of the screen
+			// Find the bottom and top of the screen
 			Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2(0,0));
+			Vector2 max = Camera.main.ViewportToWorldPoint (new Vector2(1,1));
 
 			// If the bullet went outside the screen on top, then destroy the bullet
-			if (transform.position.y < min.y) {
+			if (transform.position.y < min.y || transform.position.y > max.y) {
 				Destroy (gameObject);
 			}
 		}

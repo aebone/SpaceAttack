@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AudioEffectsToggle.cs" />
      <Compile Include="Assets\Scripts\Destroyer.cs" />
      <Compile Include="Assets\Scripts\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
@@ -54,8 +55,13 @@
      <Compile Include="Assets\Scripts\FriendSpawner.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GameScore.cs" />
+     <Compile Include="Assets\Scripts\HighScores.cs" />
      <Compile Include="Assets\Scripts\PlayerBullet.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Star.cs" />
+     <Compile Include="Assets\Scripts\StarSpawner.cs" />
+     <Compile Include="Assets\Scripts\TimeCounter.cs" />
+     <Compile Include="Assets\Scripts\ToggleMusic.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
