@@ -9,11 +9,12 @@ public class PlayerController : MonoBehaviour {
 	public GameObject PlayerBullet; // Reference to the PlayerBullet prefab
 	public GameObject GunPosition; // Reference to the empty PlayerGun object (starting bullet point)
 	public GameObject Explosion; // Reference to the explosion prefab
+	public GameObject GreenExplosion; // Reference to the explosion prefab
 	public Text LivesTextUI; // Lives text
 	int maxLives = 3; // Number of lives when start
 	int lives; // To count lives
 
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -79,6 +80,11 @@ public class PlayerController : MonoBehaviour {
 				gameObject.SetActive(false);
 			}
 		}
+		if (collider.tag == "FriendBulletTag") {
+			PlayGreenExplosionAnimation ();
+			lives++;
+			LivesTextUI.text = lives.ToString ();
+		}
 	}
 
 	void PlayExplosionAnimation(){
@@ -86,6 +92,13 @@ public class PlayerController : MonoBehaviour {
 		GameObject explosion = (GameObject)Instantiate(Explosion);
 		// Set the explosion position to the player position
 		explosion.transform.position = transform.position;
+	}
+
+	void PlayGreenExplosionAnimation(){
+		// Instantiate the explosion
+		GameObject greenExplosion = (GameObject)Instantiate(GreenExplosion);
+		// Set the explosion position to the player position
+		greenExplosion.transform.position = transform.position;
 	}
 
 	/*
@@ -100,6 +113,4 @@ public class PlayerController : MonoBehaviour {
 		transform.position = new Vector2(0,0);
 		gameObject.SetActive (true);
 	}
-
-
 }

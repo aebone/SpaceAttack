@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject TimeCounterGO;
 	public GameObject Logo;
 	public GameObject InputName;
+	public GameObject LevelUp;
+	public Text TextLevelUI; 
+	int level;
 
 	// Allow to create GameManagerState object to manage the game state using switch case
 	public enum GameManagerState
@@ -50,6 +54,13 @@ public class GameManager : MonoBehaviour {
 			InputName.SetActive(false);
 			break;
 		case GameManagerState.Playing:
+			// Set level to 1 again
+			level = 1;
+			// Active LevelUp each 30 seconds
+			InvokeRepeating ("ActiveLevelUp", 30f, 30f);
+			TextLevelUI.text = level.ToString ();
+			// Start the time counter
+			TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 			// Set initial score to 0 - needed in case player dies and plays again
 			ScoreTextUI.GetComponent<GameScore>().Score = 0; 
 			// Set the PlayButton invisible
@@ -60,8 +71,6 @@ public class GameManager : MonoBehaviour {
 			EnemySpawner.GetComponent<EnemySpawner>().ScheduleEnemySpawner();
 			// Start Friend spawner
 			FriendSpawner.GetComponent<FriendSpawner>().ScheduleFriendSpawner();
-			// Start the time counter
-			TimeCounterGO.GetComponent<TimeCounter>().StartTimeCounter();
 			// Hide the logo
 			Logo.SetActive(false);
 			// Hide Instructions Button
@@ -80,8 +89,21 @@ public class GameManager : MonoBehaviour {
 			GameOver.SetActive(true);
 			// Check score to keep or not
 			ScoreTextUI.GetComponent<GameScore>().OnGameOver(); 
+			// Cancel LevelUP Invoking
+			CancelInvoke("ActiveLevelUp");
 			break;
 		}
+	}
+
+	void ActiveLevelUp() {
+		LevelUp.SetActive(true);
+		level++;
+		TextLevelUI.text = level.ToString ();
+		Invoke ("DisableLevelUp", 2f);
+	}
+
+	void DisableLevelUp() {
+		LevelUp.SetActive(false);
 	}
 
 	/* 
@@ -104,6 +126,4 @@ public class GameManager : MonoBehaviour {
 	public void ChangeToOpeningState () {
 		SetGameState (GameManagerState.Opening);
 	}
-
-
 }

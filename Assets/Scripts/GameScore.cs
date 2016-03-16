@@ -10,11 +10,12 @@ public class GameScore : MonoBehaviour {
 	// References to start keep records 
 	int firstPlace = 0;
 	int secondPlace = 0;
-	public int thirdPlace = 0; // public to be accessed by GameManager
+	int thirdPlace = 0;
 
 	public GameObject PanelHighScores;
 	public GameObject GameManager; 
 	public GameObject InputName;
+	public GameObject MessageHighScore;
 
 	public string username;
 
@@ -34,7 +35,6 @@ public class GameScore : MonoBehaviour {
 	void Start () {
 		// Get the TextUI component of this gameobject
 		scoreTextUI = GetComponent<Text>();
-
 		// Get the scores from player prefs if it is there, 0 otherwise.
 		firstPlace = PlayerPrefs.GetInt("firstPlaceKey", 0);  
 		secondPlace = PlayerPrefs.GetInt("secondPlaceKey", 0);  
@@ -54,32 +54,34 @@ public class GameScore : MonoBehaviour {
 
 	void SendPrefs(string user) {
 		InputName.SetActive (false);
+		MessageHighScore.SetActive (false);
 		if (score > firstPlace) {
 			PlayerPrefs.SetInt ("firstPlaceKey", score);
 			PlayerPrefs.SetString ("nameFirstPlaceKey", user);
 			PlayerPrefs.Save ();
-		} else if (score > secondPlace && score < firstPlace) {
+		} else if (score > secondPlace && score <= firstPlace) {
 			PlayerPrefs.SetInt ("secondPlaceKey", score);
 			PlayerPrefs.SetString ("nameSecondPlaceKey", user);
 			PlayerPrefs.Save ();
-		} else if (score > thirdPlace && score < secondPlace) {
+		} else if (score > thirdPlace && score <= secondPlace) {
 			PlayerPrefs.SetInt ("thirdPlaceKey", score);
 			PlayerPrefs.SetString ("nameThirdPlaceKey", user);
 			PlayerPrefs.Save ();
 		} 
+		PanelHighScores.GetComponent<HighScores> ().UpdateLeaderboard ();
 		GameManager.GetComponent<GameManager>().ChangeToOpeningState();
 	}
 
 	public void OnGameOver() {
-		if (score > firstPlace) {
-			InputName.SetActive(true);
-		} else if (score > secondPlace && score < firstPlace) {
-			InputName.SetActive(true);
-		} else if (score > thirdPlace && score < secondPlace) {
-			InputName.SetActive(true);
-		} else {
-			GameManager.GetComponent<GameManager>().Invoke("ChangeToOpeningState", 5f);
-		}
+		if (score > thirdPlace) 
+			Invoke ("ShowHighScorePanel", 3f);
+		else
+			GameManager.GetComponent<GameManager>().Invoke("ChangeToOpeningState", 5f);	
+	}
+
+	void ShowHighScorePanel() {
+		MessageHighScore.SetActive (true);
+		InputName.SetActive(true);
 	}
 
 	// Get the username

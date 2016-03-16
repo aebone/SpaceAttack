@@ -15,7 +15,7 @@ public class HighScores : MonoBehaviour {
 		UpdateLeaderboard ();
 	}
 
-	public void UpdateLeaderboard(){
+	public void UpdateLeaderboard() {
 		// Get the TextUI components that show the scores
 
 		//
@@ -34,9 +34,9 @@ public class HighScores : MonoBehaviour {
 		second = PlayerPrefs.GetInt("secondPlaceKey", 0);
 		third = PlayerPrefs.GetInt("thirdPlaceKey", 0);
 
-		namefirst = PlayerPrefs.GetString("nameFirstPlaceKey", "test1");
-		namesecond = PlayerPrefs.GetString("nameSecondPlaceKey", "test2");
-		namethird = PlayerPrefs.GetString("nameThirdPlaceKey", "test3");
+		namefirst = PlayerPrefs.GetString("nameFirstPlaceKey", "You can be here");
+		namesecond = PlayerPrefs.GetString("nameSecondPlaceKey", "You can be here");
+		namethird = PlayerPrefs.GetString("nameThirdPlaceKey", "You can be here");
 		//
 	
 

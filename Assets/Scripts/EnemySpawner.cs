@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemySpawner : MonoBehaviour {
 
 	public GameObject Enemy; // Enemy prefab reference 
-	float maxSpawnRateInSeconds = 6f;
+	float maxSpawnRateInSeconds = 8f;
 
 
 	// Spawn the enemy (method called once each 1 to maxSpawnRateInSeconds seconds)
@@ -27,14 +27,8 @@ public class EnemySpawner : MonoBehaviour {
 	void ScheduleNextEnemySpawn(){
 		// Variable to receive a random number between 1 and maxSpawnRateInSeconds
 		float spawnInNSeconds;
-
-		// Check if maxSpawnRateInSeconds is above 0 to generate a ramdom number, if not set it to 1
-		if (maxSpawnRateInSeconds > 1f) {
-			// Generate random number 
-			spawnInNSeconds = Random.Range (1f, maxSpawnRateInSeconds);
-		} else {
-			spawnInNSeconds = 1f;
-		}
+	
+		spawnInNSeconds = Random.Range (0.5f, maxSpawnRateInSeconds);
 
 		// Invoke SpawnEnemy() in spawnInNSeconds seconds
 		Invoke ("SpawnEnemy", spawnInNSeconds);
@@ -59,7 +53,7 @@ public class EnemySpawner : MonoBehaviour {
 	// User pressed play button - Function to start enemy spawner, called when game state is playing
 	public void ScheduleEnemySpawner() {
 		// Reset max spawn rate when user clicks play
-		maxSpawnRateInSeconds = 6f;
+		maxSpawnRateInSeconds = 8f;
 
 		// Invoke the method to spawn the first enemy in 3 seconds
 		Invoke ("SpawnEnemy", 3f);

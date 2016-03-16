@@ -28,11 +28,12 @@ public class FriendController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collider) {
 		if (collider.tag == "PlayerTag" || collider.tag == "PlayerBulletTag" ) {	
 			PlayExplosionAnimation ();
-			if (collider.tag == "PlayerBulletTag")
-				PlayMessage ();
 			// Reduce 5 points to the score using the setScore method on the GameScore class
 			ScoreTextUI.GetComponent<GameScore>().Score -= 5;
 			Destroy (gameObject);
+		}
+		if (collider.tag == "PlayerBulletTag") {
+			PlayMessage ();
 		}
 	}
 
